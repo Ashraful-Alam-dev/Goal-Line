@@ -1,0 +1,89 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MarketType {
+  RESULT
+  GOALS
+  BTTS
+}
+
+enum Prediction {
+  HOME
+  AWAY
+  DRAW
+  OVER
+  UNDER
+  YES
+  NO
+}
+
+enum BetStatus {
+  PENDING
+  WON
+  LOST
+}
+
+enum FixtureStatus {
+  OPEN
+  SETTLED
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+  role     Role   @default(USER)
+  points   Float  @default(1000.0)
+  bets     Bet[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Fixture {
+  id              String        @id @default(uuid())
+  homeTeam        String
+  awayTeam        String
+  oddsHome        Float
+  oddsAway        Float
+  oddsDraw        Float
+  goalsTarget     Decimal       @db.Decimal(3, 1)
+  oddsOver        Float
+  oddsUnder       Float
+  oddsBttsYes     Float
+  oddsBttsNo      Float
+  status          FixtureStatus @default(OPEN)
+  finalHomeScore  Int?
+  finalAwayScore  Int?
+  bets            Bet[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bet {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fixtureId   String
+  fixture     Fixture    @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  marketType  MarketType
+  prediction  Prediction
+  stake       Float
+  payout      Float
+  status      BetStatus  @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
