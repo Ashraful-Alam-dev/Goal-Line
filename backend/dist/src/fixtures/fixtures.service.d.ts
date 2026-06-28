@@ -57,8 +57,12 @@ export declare class FixturesService {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getLeaderboard(): Promise<{
-        username: string;
-        points: number;
-    }[]>;
+    getLeaderboard(userId?: string): Promise<{
+        leaderboard: {
+            rank: number;
+            username: string;
+            points: number;
+        }[];
+        currentUser: any;
+    }>;
 }

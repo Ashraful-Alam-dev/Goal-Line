@@ -29,4 +29,11 @@ export declare class AuthService {
         };
     }>;
     private generateToken;
+    me(userId: string): Promise<{
+        id: string;
+        username: string;
+        role: import("@prisma/client").$Enums.Role;
+        points: number;
+        createdAt: Date;
+    }>;
 }

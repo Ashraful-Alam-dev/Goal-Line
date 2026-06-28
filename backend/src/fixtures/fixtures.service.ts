@@ -57,6 +57,9 @@ export class FixturesService {
 
   async getLeaderboard(userId?: string) {
     const users = await this.prisma.user.findMany({
+      where: {
+        role: 'USER',
+      },
       select: {
         id: true,
         username: true,

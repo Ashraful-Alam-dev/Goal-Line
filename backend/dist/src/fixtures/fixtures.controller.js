@@ -31,8 +31,8 @@ let FixturesController = class FixturesController {
     getHistory() {
         return this.fixturesService.findSettled();
     }
-    getLeaderboard() {
-        return this.fixturesService.getLeaderboard();
+    getLeaderboard(req) {
+        return this.fixturesService.getLeaderboard(req.user.id);
     }
 };
 exports.FixturesController = FixturesController;
@@ -59,8 +59,10 @@ __decorate([
 ], FixturesController.prototype, "getHistory", null);
 __decorate([
     (0, common_1.Get)('leaderboard'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], FixturesController.prototype, "getLeaderboard", null);
 exports.FixturesController = FixturesController = __decorate([

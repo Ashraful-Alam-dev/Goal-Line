@@ -16,6 +16,8 @@ exports.BetsController = void 0;
 const common_1 = require("@nestjs/common");
 const bets_service_1 = require("./bets.service");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const client_1 = require("@prisma/client");
 let BetsController = class BetsController {
     constructor(betsService) {
         this.betsService = betsService;
@@ -25,6 +27,9 @@ let BetsController = class BetsController {
     }
     myBets(req) {
         return this.betsService.myBets(req.user.id);
+    }
+    getAllBets() {
+        return this.betsService.getAllBets();
     }
 };
 exports.BetsController = BetsController;
@@ -43,6 +48,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BetsController.prototype, "myBets", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_guard_1.Roles)(client_1.Role.ADMIN),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], BetsController.prototype, "getAllBets", null);
 exports.BetsController = BetsController = __decorate([
     (0, common_1.Controller)('bets'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),

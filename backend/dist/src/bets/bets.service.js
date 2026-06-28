@@ -29,6 +29,9 @@ let BetsService = class BetsService {
             if (!user) {
                 throw new common_1.BadRequestException('User not found');
             }
+            if (user.role === 'ADMIN') {
+                throw new common_1.BadRequestException('Admins cannot place bets');
+            }
             if (user.points < stake) {
                 throw new common_1.BadRequestException('Insufficient points');
             }
@@ -118,6 +121,32 @@ let BetsService = class BetsService {
                 userId,
             },
             include: {
+                fixture: {
+                    select: {
+                        id: true,
+                        homeTeam: true,
+                        awayTeam: true,
+                        status: true,
+                        finalHomeScore: true,
+                        finalAwayScore: true,
+                    },
+                },
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+    }
+    async getAllBets() {
+        return this.prisma.bet.findMany({
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        points: true,
+                    },
+                },
                 fixture: {
                     select: {
                         id: true,

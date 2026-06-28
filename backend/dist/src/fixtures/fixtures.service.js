@@ -56,17 +56,42 @@ let FixturesService = class FixturesService {
             take: limit,
         });
     }
-    async getLeaderboard() {
-        return this.prisma.user.findMany({
+    async getLeaderboard(userId) {
+        const users = await this.prisma.user.findMany({
+            where: {
+                role: 'USER',
+            },
             select: {
+                id: true,
                 username: true,
                 points: true,
             },
             orderBy: {
                 points: 'desc',
             },
-            take: 10,
         });
+        const leaderboard = users
+            .slice(0, 10)
+            .map((user, index) => ({
+            rank: index + 1,
+            username: user.username,
+            points: user.points,
+        }));
+        let currentUser = null;
+        if (userId) {
+            const userIndex = users.findIndex((user) => user.id === userId);
+            if (userIndex !== -1) {
+                currentUser = {
+                    rank: userIndex + 1,
+                    username: users[userIndex].username,
+                    points: users[userIndex].points,
+                };
+            }
+        }
+        return {
+            leaderboard,
+            currentUser,
+        };
     }
 };
 exports.FixturesService = FixturesService;

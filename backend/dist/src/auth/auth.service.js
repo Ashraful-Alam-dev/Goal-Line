@@ -101,6 +101,24 @@ let AuthService = class AuthService {
             },
         };
     }
+    async me(userId) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+            select: {
+                id: true,
+                username: true,
+                role: true,
+                points: true,
+                createdAt: true,
+            },
+        });
+        if (!user) {
+            throw new common_1.UnauthorizedException("User not found");
+        }
+        return user;
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

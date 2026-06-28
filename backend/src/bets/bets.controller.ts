@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { BetsService } from './bets.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Roles, RolesGuard } from '../auth/roles.guard';
+import { Role } from '@prisma/client';
 
 @Controller('bets')
 @UseGuards(JwtAuthGuard)
@@ -25,5 +27,12 @@ export class BetsController {
     return this.betsService.myBets(
       req.user.id,
     );
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  getAllBets() {
+    return this.betsService.getAllBets();
   }
 }

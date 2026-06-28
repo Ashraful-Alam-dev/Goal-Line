@@ -28,6 +28,12 @@ export class BetsService {
         );
       }
 
+      if (user.role === 'ADMIN') {
+        throw new BadRequestException(
+          'Admins cannot place bets',
+        );
+      }
+
       if (user.points < stake) {
         throw new BadRequestException(
           'Insufficient points',
@@ -156,6 +162,33 @@ export class BetsService {
         userId,
       },
       include: {
+        fixture: {
+          select: {
+            id: true,
+            homeTeam: true,
+            awayTeam: true,
+            status: true,
+            finalHomeScore: true,
+            finalAwayScore: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
+  async getAllBets() {
+    return this.prisma.bet.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            points: true,
+          },
+        },
         fixture: {
           select: {
             id: true,

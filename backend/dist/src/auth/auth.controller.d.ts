@@ -26,4 +26,11 @@ export declare class AuthController {
             points: number;
         };
     }>;
+    me(req: any): Promise<{
+        id: string;
+        username: string;
+        role: import("@prisma/client").$Enums.Role;
+        points: number;
+        createdAt: Date;
+    }>;
 }
