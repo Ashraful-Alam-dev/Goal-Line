@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import {
   Fixture,
@@ -27,6 +28,21 @@ export default function AdminHomePage() {
     queryFn: fixturesService.getOpenFixtures,
   });
 
+  const startFixture = async (id: string) => {
+    try {
+      await fixturesService.startFixture(id);
+
+      toast.success("Match started.");
+
+      refetch();
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ??
+          "Failed to start match."
+      );
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="mx-auto max-w-5xl space-y-6">
@@ -43,13 +59,14 @@ export default function AdminHomePage() {
   return (
     <>
       <div className="mx-auto max-w-5xl space-y-8">
+
         <div>
           <h1 className="text-3xl font-bold">
-            Open Fixtures
+            Fixtures
           </h1>
 
           <p className="text-muted-foreground">
-            Settle completed matches.
+            Start or settle matches.
           </p>
         </div>
 
@@ -58,11 +75,15 @@ export default function AdminHomePage() {
             key={fixture.id}
             fixture={fixture}
             admin
+            onStart={() =>
+              startFixture(fixture.id)
+            }
             onSettle={() =>
               setFixture(fixture)
             }
           />
         ))}
+
       </div>
 
       {fixture && (

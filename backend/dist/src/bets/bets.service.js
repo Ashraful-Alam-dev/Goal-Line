@@ -43,18 +43,11 @@ let BetsService = class BetsService {
             if (!fixture) {
                 throw new common_1.BadRequestException('Fixture not found');
             }
-            if (fixture.status !== client_1.FixtureStatus.OPEN) {
-                throw new common_1.BadRequestException('Fixture is closed');
+            if (fixture.status === client_1.FixtureStatus.IN_PROGRESS) {
+                throw new common_1.BadRequestException('Match is already in progress. Betting is closed.');
             }
-            const existingBet = await tx.bet.findFirst({
-                where: {
-                    userId,
-                    fixtureId: dto.fixtureId,
-                    marketType: dto.marketType,
-                },
-            });
-            if (existingBet) {
-                throw new common_1.BadRequestException('You already placed this market bet');
+            if (fixture.status === client_1.FixtureStatus.SETTLED) {
+                throw new common_1.BadRequestException('Match has already been settled.');
             }
             let targetOdds = 0;
             if (dto.marketType === client_1.MarketType.RESULT) {

@@ -11,12 +11,46 @@ import { BetStatus } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard, Roles } from '../auth/roles.guard';
+import { FixtureStatus } from '@prisma/client';
 
 @Controller('fixtures')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
 export class SettlementController {
   constructor(private readonly prisma: PrismaService) {}
+
+  @Post(':id/start')
+  async startFixture(
+    @Param('id') id: string,
+  ) {
+    const fixture = await this.prisma.fixture.findUnique({
+      where: { id },
+    });
+
+    if (!fixture) {
+      throw new BadRequestException('Fixture not found');
+    }
+
+    if (fixture.status === FixtureStatus.IN_PROGRESS) {
+      throw new BadRequestException(
+        'Match already started',
+      );
+    }
+
+    if (fixture.status === FixtureStatus.SETTLED) {
+      throw new BadRequestException(
+        'Match already settled',
+      );
+    }
+
+    return this.prisma.fixture.update({
+      where: { id },
+      data: {
+        status: FixtureStatus.IN_PROGRESS,
+      },
+    });
+  }
+
 
   @Post(':id/settle')
   async settleFixture(
@@ -36,6 +70,10 @@ export class SettlementController {
 
       if (fixture.status === 'SETTLED') {
         throw new BadRequestException('Fixture already settled');
+      }
+
+      if (fixture.status === FixtureStatus.OPEN) {
+        throw new BadRequestException('Start the match before settling it');
       }
 
       const trueResult =
@@ -112,7 +150,7 @@ export class SettlementController {
       return tx.fixture.update({
         where: { id },
         data: {
-          status: 'SETTLED',
+          status: FixtureStatus.SETTLED,
           finalHomeScore: homeScore,
           finalAwayScore: awayScore,
         },

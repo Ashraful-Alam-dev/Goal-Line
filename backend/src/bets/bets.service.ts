@@ -52,23 +52,15 @@ export class BetsService {
         );
       }
 
-      if (fixture.status !== FixtureStatus.OPEN) {
+      if (fixture.status === FixtureStatus.IN_PROGRESS) {
         throw new BadRequestException(
-          'Fixture is closed',
+          'Match is already in progress. Betting is closed.',
         );
       }
 
-      const existingBet = await tx.bet.findFirst({
-        where: {
-          userId,
-          fixtureId: dto.fixtureId,
-          marketType: dto.marketType,
-        },
-      });
-
-      if (existingBet) {
+      if (fixture.status === FixtureStatus.SETTLED) {
         throw new BadRequestException(
-          'You already placed this market bet',
+          'Match has already been settled.',
         );
       }
 

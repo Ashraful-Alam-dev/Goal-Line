@@ -33,15 +33,20 @@ export class FixturesService {
   }
 
   async findAllOpen() {
-    return this.prisma.fixture.findMany({
-      where: {
-        status: FixtureStatus.OPEN,
+  return this.prisma.fixture.findMany({
+    where: {
+      status: {
+        in: [
+          FixtureStatus.OPEN,
+          FixtureStatus.IN_PROGRESS,
+        ],
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+}
 
   async findSettled(limit = 50) {
     return this.prisma.fixture.findMany({

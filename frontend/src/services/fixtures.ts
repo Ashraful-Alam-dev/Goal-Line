@@ -17,7 +17,7 @@ export type Fixture = {
 
   goalsTarget: number;
 
-  status: "OPEN" | "SETTLED";
+  status: "OPEN" | "IN_PROGRESS" | "SETTLED";
 
   finalHomeScore?: number | null;
   finalAwayScore?: number | null;
@@ -64,21 +64,17 @@ export const fixturesService = {
   },
 
   getHistory: async () => {
-    const res = await api.get<Fixture[]>(
-      "/fixtures/history"
-    );
-
+    const res = await api.get<Fixture[]>("/fixtures/history");
     return res.data;
   },
 
-  createFixture: async (
-    data: CreateFixtureDto
-  ) => {
-    const res = await api.post(
-      "/fixtures",
-      data
-    );
+  createFixture: async (data: CreateFixtureDto) => {
+    const res = await api.post("/fixtures", data);
+    return res.data;
+  },
 
+  startFixture: async (id: string) => {
+    const res = await api.post(`/fixtures/${id}/start`);
     return res.data;
   },
 

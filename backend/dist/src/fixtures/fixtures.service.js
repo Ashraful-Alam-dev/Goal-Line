@@ -38,7 +38,12 @@ let FixturesService = class FixturesService {
     async findAllOpen() {
         return this.prisma.fixture.findMany({
             where: {
-                status: client_1.FixtureStatus.OPEN,
+                status: {
+                    in: [
+                        client_1.FixtureStatus.OPEN,
+                        client_1.FixtureStatus.IN_PROGRESS,
+                    ],
+                },
             },
             orderBy: {
                 createdAt: 'desc',

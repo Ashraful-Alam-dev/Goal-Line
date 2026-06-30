@@ -36,6 +36,7 @@ enum BetStatus {
 
 enum FixtureStatus {
   OPEN
+  IN_PROGRESS
   SETTLED
 }
 

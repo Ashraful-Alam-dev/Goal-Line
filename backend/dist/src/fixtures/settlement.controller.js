@@ -19,9 +19,30 @@ const client_2 = require("@prisma/client");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const roles_guard_1 = require("../auth/roles.guard");
+const client_3 = require("@prisma/client");
 let SettlementController = class SettlementController {
     constructor(prisma) {
         this.prisma = prisma;
+    }
+    async startFixture(id) {
+        const fixture = await this.prisma.fixture.findUnique({
+            where: { id },
+        });
+        if (!fixture) {
+            throw new common_1.BadRequestException('Fixture not found');
+        }
+        if (fixture.status === client_3.FixtureStatus.IN_PROGRESS) {
+            throw new common_1.BadRequestException('Match already started');
+        }
+        if (fixture.status === client_3.FixtureStatus.SETTLED) {
+            throw new common_1.BadRequestException('Match already settled');
+        }
+        return this.prisma.fixture.update({
+            where: { id },
+            data: {
+                status: client_3.FixtureStatus.IN_PROGRESS,
+            },
+        });
     }
     async settleFixture(id, body) {
         const { homeScore, awayScore } = body;
@@ -34,6 +55,9 @@ let SettlementController = class SettlementController {
             }
             if (fixture.status === 'SETTLED') {
                 throw new common_1.BadRequestException('Fixture already settled');
+            }
+            if (fixture.status === client_3.FixtureStatus.OPEN) {
+                throw new common_1.BadRequestException('Start the match before settling it');
             }
             const trueResult = homeScore > awayScore
                 ? 'HOME'
@@ -89,7 +113,7 @@ let SettlementController = class SettlementController {
             return tx.fixture.update({
                 where: { id },
                 data: {
-                    status: 'SETTLED',
+                    status: client_3.FixtureStatus.SETTLED,
                     finalHomeScore: homeScore,
                     finalAwayScore: awayScore,
                 },
@@ -98,6 +122,13 @@ let SettlementController = class SettlementController {
     }
 };
 exports.SettlementController = SettlementController;
+__decorate([
+    (0, common_1.Post)(':id/start'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], SettlementController.prototype, "startFixture", null);
 __decorate([
     (0, common_1.Post)(':id/settle'),
     __param(0, (0, common_1.Param)('id')),
