@@ -48,83 +48,136 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ----------------------------------------------------------------------
+   GoalLine — "Floodlight" theme
+   True slate-950 background, pure white text, gold -> orange gradient
+   as the single accent, red reserved for critical/admin actions.
+   Plain hex values on purpose (not oklch) for guaranteed, predictable
+   rendering across every browser/build pipeline.
+   This is the ONLY theme the app uses — no light/dark toggle.
+---------------------------------------------------------------------- */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  color-scheme: dark;
+
+  --background: #020617;
+  --foreground: #ffffff;
+
+  --card: #0f172a;
+  --card-foreground: #ffffff;
+
+  --popover: #0f172a;
+  --popover-foreground: #ffffff;
+
+  --primary: #f59e0b;
+  --primary-foreground: #1c1310;
+
+  --secondary: #1e293b;
+  --secondary-foreground: #ffffff;
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  --accent: #1e293b;
+  --accent-foreground: #ffffff;
+
+  --destructive: #dc2626;
+  --border: rgba(148, 163, 184, 0.16);
+  --input: rgba(148, 163, 184, 0.22);
+  --ring: #f59e0b;
+
+  --chart-1: #f59e0b;
+  --chart-2: #ea580c;
+  --chart-3: #94a3b8;
+  --chart-4: #64748b;
+  --chart-5: #334155;
+
+  --radius: 0.75rem;
+
+  --sidebar: #0f172a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #f59e0b;
+  --sidebar-primary-foreground: #1c1310;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(148, 163, 184, 0.16);
+  --sidebar-ring: #f59e0b;
+
+  /* Gold -> orange gradient stops, used by .bg-gold-gradient / .text-gold-gradient */
+  --gold-1: #fde68a;
+  --gold-2: #f5b942;
+  --gold-3: #f59e0b;
+  --gold-4: #ea580c;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #020617;
+  --foreground: #ffffff;
+  --card: #0f172a;
+  --card-foreground: #ffffff;
+  --popover: #0f172a;
+  --popover-foreground: #ffffff;
+  --primary: #f59e0b;
+  --primary-foreground: #1c1310;
+  --secondary: #1e293b;
+  --secondary-foreground: #ffffff;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: rgba(148, 163, 184, 0.16);
+  --input: rgba(148, 163, 184, 0.22);
+  --ring: #f59e0b;
+  --chart-1: #f59e0b;
+  --chart-2: #ea580c;
+  --chart-3: #94a3b8;
+  --chart-4: #64748b;
+  --chart-5: #334155;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #f59e0b;
+  --sidebar-primary-foreground: #1c1310;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(148, 163, 184, 0.16);
+  --sidebar-ring: #f59e0b;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
     @apply font-sans;
+    background-color: var(--background);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100dvh;
+    background-color: var(--background);
+  }
+}
+
+@layer utilities {
+  .bg-gold-gradient {
+    background-image: linear-gradient(110deg, var(--gold-1) 0%, var(--gold-2) 35%, var(--gold-3) 65%, var(--gold-4) 100%);
+  }
+  .text-gold-gradient {
+    background-image: linear-gradient(110deg, var(--gold-1) 0%, var(--gold-3) 55%, var(--gold-4) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .border-gold {
+    border-color: rgba(245, 158, 11, 0.45);
+  }
+  .glow-gold {
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2), 0 8px 24px -8px rgba(234, 88, 12, 0.45);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }

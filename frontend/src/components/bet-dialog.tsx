@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Goal, TrendingUp, Percent, Coins, Loader2 } from "lucide-react";
 
 import { Fixture } from "@/services/fixtures";
 import { betsService } from "@/services/bets";
@@ -86,68 +87,80 @@ export function BetDialog({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md p-0 overflow-hidden gap-0">
+        <div className="h-[3px] w-full bg-gold-gradient" />
 
-        <DialogHeader>
-          <DialogTitle>
-            {fixture.homeTeam} vs {fixture.awayTeam}
-          </DialogTitle>
-        </DialogHeader>
-
-        <div className="space-y-5">
+        <div className="p-6 space-y-5">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-xl font-bold text-foreground">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-gradient shrink-0">
+                <Goal className="h-4 w-4 text-background" strokeWidth={2.5} />
+              </span>
+              {fixture.homeTeam} vs {fixture.awayTeam}
+            </DialogTitle>
+          </DialogHeader>
 
           <div className="flex items-center justify-between">
-
-            <Badge>{marketType}</Badge>
-
-            <Badge variant="secondary">
-              {prediction}
+            <Badge variant="outline" className="border-gold text-amber-400 font-semibold">
+              {marketType}
             </Badge>
 
+            <Badge className="font-semibold">{prediction}</Badge>
           </div>
 
-          <div className="rounded-lg border p-4 space-y-2">
+          <div className="rounded-xl border border-gold/20 bg-gradient-to-br from-amber-500/5 to-orange-500/5 p-4 space-y-3">
+            <div className="flex items-center justify-between text-muted-foreground">
+              <span className="flex items-center gap-1.5 text-sm">
+                <Percent className="h-3.5 w-3.5" />
+                Odds
+              </span>
 
-            <div className="flex justify-between">
-
-              <span>Odds</span>
-
-              <span className="font-semibold">
+              <span className="font-semibold text-foreground tabular">
                 {odds.toFixed(2)}
               </span>
-
             </div>
 
-            <div className="flex justify-between">
+            <div className="h-px bg-border" />
 
-              <span>Potential Return</span>
-
-              <span className="font-bold text-lg">
-                {payout.toFixed(2)}
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <TrendingUp className="h-3.5 w-3.5" />
+                Potential Return
               </span>
 
+              <span className="font-bold text-xl text-gold-gradient tabular">
+                {payout.toFixed(2)}
+              </span>
             </div>
-
           </div>
 
-          <Input
-            type="number"
-            min={1}
-            placeholder="Stake"
-            value={stake}
-            onChange={(e) => setStake(e.target.value)}
-          />
+          <div className="relative">
+            <Coins className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="number"
+              min={1}
+              placeholder="Enter stake"
+              value={stake}
+              onChange={(e) => setStake(e.target.value)}
+              className="pl-9 h-11"
+            />
+          </div>
 
           <Button
-            className="w-full"
+            className="w-full h-11 gap-2 font-semibold"
             disabled={!stake || loading}
             onClick={placeBet}
           >
-            {loading ? "Placing Bet..." : "Place Bet"}
+            {loading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Placing Bet...
+              </>
+            ) : (
+              "Place Bet"
+            )}
           </Button>
-
         </div>
-
       </DialogContent>
     </Dialog>
   );

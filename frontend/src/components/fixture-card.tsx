@@ -1,5 +1,7 @@
 "use client";
 
+import { Target, TrendingUp, Users, Goal } from "lucide-react";
+
 import { Fixture } from "@/services/fixtures";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,11 +35,45 @@ function OddsButton({
       variant="outline"
       disabled={disabled}
       onClick={onClick}
-      className="h-16 flex-col gap-1 transition-all hover:scale-[1.03] hover:border-primary"
+      className="group/button h-14 flex-col gap-0.5 transition-all duration-200 hover:scale-[1.03] bg-background/40 text-foreground hover:bg-amber-500/10 hover:border-gold hover:shadow-[0_0_16px_-4px_rgba(245,158,11,0.5)] disabled:opacity-40 disabled:hover:scale-100"
     >
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span className="text-lg font-bold">{odds.toFixed(2)}</span>
+      <span className="text-[10px] uppercase tracking-wider text-muted-foreground transition-colors group-hover/button:text-amber-300">
+        {label}
+      </span>
+      <span className="text-base font-bold tabular text-gold-gradient">
+        {odds.toFixed(2)}
+      </span>
     </Button>
+  );
+}
+
+function SectionHeader({
+  icon: Icon,
+  title,
+  tag,
+  extra,
+}: {
+  icon: React.ElementType;
+  title: string;
+  tag: string;
+  extra?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5 text-amber-400" />
+        <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+        {extra && (
+          <span className="text-xs font-bold text-amber-400">{extra}</span>
+        )}
+      </div>
+      <Badge
+        variant="outline"
+        className="text-[10px] border-border text-amber-400 font-bold bg-transparent px-1.5 py-0"
+      >
+        {tag}
+      </Badge>
+    </div>
   );
 }
 
@@ -50,65 +86,84 @@ export function FixtureCard({
 }: Props) {
   const bettingClosed = fixture.status !== "OPEN";
 
-  const getStatusVariant = (status: string) => {
+  const getStatusStyles = (status: string) => {
     switch (status) {
       case "OPEN":
-        return "default";
+        return "bg-amber-500/15 text-amber-400 border-amber-500/40";
       case "IN_PROGRESS":
-        return "secondary";
+        return "bg-rose-500/10 text-rose-400 border-rose-500/30";
       default:
-        return "outline";
+        return "bg-foreground/5 text-muted-foreground border-border";
     }
   };
 
   return (
-    <Card className="overflow-hidden">
-      <div className="border-b bg-muted/30 p-6">
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex w-full items-center justify-between">
+    <Card className="overflow-hidden p-0 transition-all duration-300 hover:shadow-[0_0_28px_-10px_rgba(245,158,11,0.3)] hover:border-amber-500/25">
+      <div className="border-b border-border bg-secondary/60 p-4">
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="flex w-full items-center justify-between gap-2">
             <div className="flex-1 text-center">
-              <h2 className="text-lg font-bold">{fixture.homeTeam}</h2>
+              <h2 className="text-base font-bold text-foreground leading-tight">
+                {fixture.homeTeam}
+              </h2>
             </div>
-            <Badge variant="secondary" className="mx-4">VS</Badge>
+
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-gradient shadow-[0_0_14px_-3px_rgba(245,158,11,0.55)]">
+              <Goal className="h-4 w-4 text-background" strokeWidth={2.5} />
+            </div>
+
             <div className="flex-1 text-center">
-              <h2 className="text-lg font-bold">{fixture.awayTeam}</h2>
+              <h2 className="text-base font-bold text-foreground leading-tight">
+                {fixture.awayTeam}
+              </h2>
             </div>
           </div>
+
           {!admin && (
             <Badge
-              variant={getStatusVariant(fixture.status)}
-              className="text-xs uppercase tracking-wider px-2.5 py-0.5 font-semibold"
+              className={`gap-1.5 text-[10px] uppercase tracking-wider px-2 py-0.5 font-bold border ${getStatusStyles(
+                fixture.status
+              )}`}
             >
+              {fixture.status === "IN_PROGRESS" && (
+                <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
+              )}
               {fixture.status.replace("_", " ")}
             </Badge>
           )}
         </div>
       </div>
-      <div className="space-y-5 p-5">
+
+      <div className="space-y-3.5 p-4">
         {admin ? (
-          <div className="space-y-3">
-            <Badge className="w-full justify-center">
+          <div className="space-y-2">
+            <Badge
+              className={`w-full justify-center py-1 font-semibold uppercase tracking-wider text-xs border ${getStatusStyles(
+                fixture.status
+              )}`}
+            >
               {fixture.status.replace("_", " ")}
             </Badge>
             {fixture.status === "OPEN" && (
-              <Button className="w-full" onClick={onStart}>
+              <Button className="w-full h-9 text-sm gap-1.5" onClick={onStart}>
+                <Target className="h-3.5 w-3.5" />
                 Start Match
               </Button>
             )}
             {fixture.status === "IN_PROGRESS" && (
-              <Button className="w-full" onClick={onSettle}>
+              <Button
+                className="w-full h-9 text-sm gap-1.5 bg-red-600 hover:bg-red-700 text-white shadow-none"
+                onClick={onSettle}
+              >
                 Settle Match
               </Button>
             )}
           </div>
         ) : (
           <>
-            <section className="space-y-3 rounded-lg border p-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Match Result</h3>
-                <Badge variant="outline">1X2</Badge>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
+            <section className="space-y-2 rounded-lg border border-border bg-background/30 p-3">
+              <SectionHeader icon={Target} title="Match Result" tag="1X2" />
+              <div className="grid grid-cols-3 gap-1.5">
                 <OddsButton
                   disabled={bettingClosed}
                   label="Home"
@@ -130,15 +185,14 @@ export function FixtureCard({
               </div>
             </section>
 
-            <section className="space-y-3 rounded-lg border p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-baseline gap-2">
-                  <h3 className="font-semibold">Goals</h3>
-                  <span className="text-italic font-semibold text-primary">- {fixture.goalsTarget}</span>
-                </div>
-                <Badge variant="outline">O/U</Badge>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
+            <section className="space-y-2 rounded-lg border border-border bg-background/30 p-3">
+              <SectionHeader
+                icon={TrendingUp}
+                title="Goals"
+                tag="O/U"
+                extra={`Over/Under ${fixture.goalsTarget}`}
+              />
+              <div className="grid grid-cols-2 gap-1.5">
                 <OddsButton
                   disabled={bettingClosed}
                   label="Over"
@@ -154,12 +208,13 @@ export function FixtureCard({
               </div>
             </section>
 
-            <section className="space-y-3 rounded-lg border p-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Both Teams To Score</h3>
-                <Badge variant="outline">BTTS</Badge>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
+            <section className="space-y-2 rounded-lg border border-border bg-background/30 p-3">
+              <SectionHeader
+                icon={Users}
+                title="Both Teams To Score"
+                tag="BTTS"
+              />
+              <div className="grid grid-cols-2 gap-1.5">
                 <OddsButton
                   disabled={bettingClosed}
                   label="Yes"
