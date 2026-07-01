@@ -46,7 +46,6 @@ export default function SignupPage() {
       {/* ambient gradient glows */}
       <div className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-orange-600/15 blur-[110px]" />
       <div className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-amber-500/15 blur-[110px]" />
-
       {/* faint pitch center-circle motif */}
       <div
         aria-hidden
@@ -56,7 +55,6 @@ export default function SignupPage() {
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/[0.06]"
       />
-
       {isSubmitting && (
         <div className="absolute inset-0 bg-background/60 backdrop-blur-[1px] z-50 flex items-center justify-center transition-all animate-fade-in">
           <div className="text-xs font-semibold uppercase tracking-widest text-amber-400 bg-card border border-border px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
@@ -65,7 +63,6 @@ export default function SignupPage() {
           </div>
         </div>
       )}
-
       <Card
         className={`relative z-10 p-0 overflow-hidden w-full max-w-[400px] shadow-2xl shadow-black/40 border-gold/10 transition-all duration-300 ${
           isSubmitting ? "opacity-60 scale-[0.99] pointer-events-none" : ""
@@ -131,7 +128,9 @@ export default function SignupPage() {
             <div className="flex-grow border-t border-border"></div>
           </div>
 
-          <Link href="/login" passHref legacyBehavior>
+          <Link href="/login">
+            {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+            }
             <Button
               variant="outline"
               className="w-full h-11 font-semibold"
