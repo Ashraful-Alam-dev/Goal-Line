@@ -82,11 +82,11 @@ export default function AdminHomePage() {
 
           {fixtures.length > 0 && (
             <div className="flex gap-2">
-              <Badge variant="outline" className="gap-1.5 border-amber-500/40 text-amber-400 font-semibold">
+              <Badge variant="outline" className="gap-1.5 border-amber-600/40 text-amber-500 font-semibold">
                 <CheckCircle2 className="h-3 w-3" />
                 {open} open
               </Badge>
-              <Badge variant="outline" className="gap-1.5 border-rose-500/30 text-rose-400 font-semibold">
+              <Badge variant="outline" className="gap-1.5 border-rose-600/30 text-rose-500 font-semibold">
                 <Radio className="h-3 w-3" />
                 {inProgress} live
               </Badge>

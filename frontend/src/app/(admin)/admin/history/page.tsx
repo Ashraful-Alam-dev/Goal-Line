@@ -63,7 +63,7 @@ export default function HistoryPage() {
           {fixtures.map((fixture) => (
             <Card
               key={fixture.id}
-              className="p-4 hover:border-amber-500/25 hover:shadow-[0_0_20px_-10px_rgba(245,158,11,0.3)] transition-all rounded-xl"
+              className="p-4 hover:border-amber-600/25 hover:shadow-[0_0_20px_-10px_rgba(194,112,10,0.3)] transition-all rounded-xl"
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="space-y-1">
@@ -73,7 +73,7 @@ export default function HistoryPage() {
 
                   <p className="text-xs font-medium text-muted-foreground">
                     Full-time Score:{" "}
-                    <span className="text-sm font-black text-amber-400 ml-1 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 tabular">
+                    <span className="text-sm font-black text-amber-500 ml-1 bg-amber-600/10 px-2 py-0.5 rounded border border-amber-600/20 tabular">
                       {fixture.finalHomeScore} — {fixture.finalAwayScore}
                     </span>
                   </p>

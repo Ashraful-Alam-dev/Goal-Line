@@ -69,7 +69,7 @@ export default function HomePage() {
     <>
       <div className="mx-auto w-full max-w-5xl space-y-6">
         <div className="text-center space-y-2">
-          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-gold-gradient shadow-[0_0_20px_-4px_rgba(245,158,11,0.55)]">
+          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-gold-gradient shadow-[0_0_20px_-4px_rgba(194,112,10,0.55)]">
             <Goal className="h-5 w-5 text-background" strokeWidth={2.5} />
           </div>
 

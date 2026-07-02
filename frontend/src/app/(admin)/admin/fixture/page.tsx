@@ -23,7 +23,7 @@ function FieldGroup({
   return (
     <div className="space-y-2 pt-3 first:pt-0">
       <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-        <Icon className="h-3.5 w-3.5 text-amber-400" />
+        <Icon className="h-3.5 w-3.5 text-amber-500" />
         {title}
       </h3>
       {children}

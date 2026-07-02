@@ -12,6 +12,7 @@ import { User, Lock, Loader2, Goal, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const schema = z.object({
   username: z.string().min(2),
@@ -43,10 +44,9 @@ export default function SignupPage() {
 
   return (
     <div className="relative flex h-screen items-center justify-center bg-background overflow-hidden px-4">
-      {/* ambient gradient glows */}
-      <div className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-orange-600/15 blur-[110px]" />
-      <div className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-amber-500/15 blur-[110px]" />
-      {/* faint pitch center-circle motif */}
+      <ThemeToggle className="absolute top-4 right-4 z-20 text-foreground/70 hover:text-foreground hover:bg-foreground/5" />
+      <div className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-orange-700/15 blur-[110px]" />
+      <div className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-amber-600/15 blur-[110px]" />
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/[0.06]"
@@ -57,8 +57,8 @@ export default function SignupPage() {
       />
       {isSubmitting && (
         <div className="absolute inset-0 bg-background/60 backdrop-blur-[1px] z-50 flex items-center justify-center transition-all animate-fade-in">
-          <div className="text-xs font-semibold uppercase tracking-widest text-amber-400 bg-card border border-border px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
+          <div className="text-xs font-semibold uppercase tracking-widest text-amber-500 bg-card border border-border px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping" />
             Provisioning profile instance...
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function SignupPage() {
 
         <div className="p-6 space-y-4">
           <div className="text-center space-y-2 pb-1">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold-gradient shadow-[0_0_22px_-4px_rgba(245,158,11,0.6)]">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold-gradient shadow-[0_0_22px_-4px_rgba(194,112,10,0.6)]">
               <Goal className="h-6 w-6 text-background" strokeWidth={2.5} />
             </div>
             <p className="text-2xl font-extrabold tracking-tight text-gold-gradient">

@@ -101,14 +101,14 @@ export function BetDialog({
           </DialogHeader>
 
           <div className="flex items-center justify-between">
-            <Badge variant="outline" className="border-gold text-amber-400 font-semibold">
+            <Badge variant="outline" className="border-gold text-amber-500 font-semibold">
               {marketType}
             </Badge>
 
             <Badge className="font-semibold">{prediction}</Badge>
           </div>
 
-          <div className="rounded-xl border border-gold/20 bg-gradient-to-br from-amber-500/5 to-orange-500/5 p-4 space-y-3">
+          <div className="rounded-xl border border-gold/20 bg-gradient-to-br from-amber-600/5 to-orange-600/5 p-4 space-y-3">
             <div className="flex items-center justify-between text-muted-foreground">
               <span className="flex items-center gap-1.5 text-sm">
                 <Percent className="h-3.5 w-3.5" />

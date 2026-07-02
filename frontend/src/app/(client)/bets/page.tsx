@@ -22,9 +22,9 @@ function StatCard({
 }) {
   const toneClass =
     tone === "gold"
-      ? "text-amber-400"
+      ? "text-amber-500"
       : tone === "danger"
-      ? "text-rose-400"
+      ? "text-rose-500"
       : "text-foreground";
 
   return (

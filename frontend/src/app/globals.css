@@ -48,99 +48,101 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ----------------------------------------------------------------------
-   GoalLine — "Floodlight" theme
-   True slate-950 background, pure white text, gold -> orange gradient
-   as the single accent, red reserved for critical/admin actions.
-   Plain hex values on purpose (not oklch) for guaranteed, predictable
-   rendering across every browser/build pipeline.
-   This is the ONLY theme the app uses — no light/dark toggle.
----------------------------------------------------------------------- */
+/* GoalLine theme tokens — light (default) and dark ("Floodlight"), toggled via .dark on <html>. */
 :root {
+  color-scheme: light;
+
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+
+  --primary: #b91c1c;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #0a0a0a;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #52525b;
+
+  --accent: #f4f4f5;
+  --accent-foreground: #0a0a0a;
+
+  --destructive: #991b1b;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: rgba(0, 0, 0, 0.14);
+  --ring: #b91c1c;
+
+  --chart-1: #c2410c;
+  --chart-2: #7f1d1d;
+  --chart-3: #52525b;
+  --chart-4: #a1a1aa;
+  --chart-5: #d4d4d8;
+
+  --radius: 0.75rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0a0a0a;
+  --sidebar-primary: #b91c1c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #0a0a0a;
+  --sidebar-border: rgba(0, 0, 0, 0.1);
+  --sidebar-ring: #b91c1c;
+
+  /* Accent gradient stops, used by .bg-gold-gradient / .text-gold-gradient */
+  --gold-1: #ea580c;
+  --gold-2: #c2410c;
+  --gold-3: #b91c1c;
+  --gold-4: #7f1d1d;
+  --accent-rgb: 185 28 28;
+}
+
+.dark {
   color-scheme: dark;
 
   --background: #020617;
   --foreground: #ffffff;
-
-  --card: #0f172a;
-  --card-foreground: #ffffff;
-
-  --popover: #0f172a;
-  --popover-foreground: #ffffff;
-
-  --primary: #f59e0b;
-  --primary-foreground: #1c1310;
-
-  --secondary: #1e293b;
-  --secondary-foreground: #ffffff;
-
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-
-  --accent: #1e293b;
-  --accent-foreground: #ffffff;
-
-  --destructive: #dc2626;
-  --border: rgba(148, 163, 184, 0.16);
-  --input: rgba(148, 163, 184, 0.22);
-  --ring: #f59e0b;
-
-  --chart-1: #f59e0b;
-  --chart-2: #ea580c;
-  --chart-3: #94a3b8;
-  --chart-4: #64748b;
-  --chart-5: #334155;
-
-  --radius: 0.75rem;
-
-  --sidebar: #0f172a;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #f59e0b;
-  --sidebar-primary-foreground: #1c1310;
-  --sidebar-accent: #1e293b;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(148, 163, 184, 0.16);
-  --sidebar-ring: #f59e0b;
-
-  /* Gold -> orange gradient stops, used by .bg-gold-gradient / .text-gold-gradient */
-  --gold-1: #fde68a;
-  --gold-2: #f5b942;
-  --gold-3: #f59e0b;
-  --gold-4: #ea580c;
-}
-
-.dark {
-  --background: #020617;
-  --foreground: #ffffff;
   --card: #0f172a;
   --card-foreground: #ffffff;
   --popover: #0f172a;
   --popover-foreground: #ffffff;
-  --primary: #f59e0b;
-  --primary-foreground: #1c1310;
+  --primary: #c2700a;
+  --primary-foreground: #fff7ea;
   --secondary: #1e293b;
   --secondary-foreground: #ffffff;
   --muted: #1e293b;
   --muted-foreground: #94a3b8;
   --accent: #1e293b;
   --accent-foreground: #ffffff;
-  --destructive: #dc2626;
+  --destructive: #991b1b;
   --border: rgba(148, 163, 184, 0.16);
   --input: rgba(148, 163, 184, 0.22);
-  --ring: #f59e0b;
-  --chart-1: #f59e0b;
-  --chart-2: #ea580c;
+  --ring: #c2700a;
+  --chart-1: #c2700a;
+  --chart-2: #9a3412;
   --chart-3: #94a3b8;
   --chart-4: #64748b;
   --chart-5: #334155;
   --sidebar: #0f172a;
   --sidebar-foreground: #ffffff;
-  --sidebar-primary: #f59e0b;
-  --sidebar-primary-foreground: #1c1310;
+  --sidebar-primary: #c2700a;
+  --sidebar-primary-foreground: #fff7ea;
   --sidebar-accent: #1e293b;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(148, 163, 184, 0.16);
-  --sidebar-ring: #f59e0b;
+  --sidebar-ring: #c2700a;
+
+  --gold-1: #bf8427;
+  --gold-2: #a96912;
+  --gold-3: #8d5207;
+  --gold-4: #6f2d10;
+  --accent-rgb: 194 112 10;
 }
 
 @layer base {
@@ -172,10 +174,10 @@
     color: transparent;
   }
   .border-gold {
-    border-color: rgba(245, 158, 11, 0.45);
+    border-color: rgb(var(--accent-rgb) / 0.45);
   }
   .glow-gold {
-    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2), 0 8px 24px -8px rgba(234, 88, 12, 0.45);
+    box-shadow: 0 0 0 1px rgb(var(--accent-rgb) / 0.2), 0 8px 24px -8px rgb(var(--accent-rgb) / 0.45);
   }
   .tabular {
     font-variant-numeric: tabular-nums;

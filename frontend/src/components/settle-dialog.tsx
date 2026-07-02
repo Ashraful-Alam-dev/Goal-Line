@@ -69,19 +69,19 @@ export function SettleDialog({
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="p-0 overflow-hidden gap-0">
-        <div className="h-[3px] w-full bg-red-600" />
+        <div className="h-[3px] w-full bg-red-700" />
 
         <div className="p-6 space-y-5">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-xl font-bold text-foreground">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/10 border border-red-500/30 shrink-0">
-                <Flag className="h-4 w-4 text-red-400" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600/10 border border-red-600/30 shrink-0">
+                <Flag className="h-4 w-4 text-red-500" />
               </span>
               {fixture.homeTeam} vs {fixture.awayTeam}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex items-center gap-2 rounded-lg border border-red-500/25 bg-red-500/5 px-3 py-2 text-xs text-red-400/90">
+          <div className="flex items-center gap-2 rounded-lg border border-red-600/25 bg-red-600/5 px-3 py-2 text-xs text-red-500/90">
             <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
             Settling this match locks in the final score and cannot be undone.
           </div>
@@ -125,7 +125,7 @@ export function SettleDialog({
           </div>
 
           <Button
-            className="w-full h-11 gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold shadow-none"
+            className="w-full h-11 gap-2 bg-red-700 hover:bg-red-800 text-white font-semibold shadow-none"
             disabled={loading}
             onClick={settle}
           >
