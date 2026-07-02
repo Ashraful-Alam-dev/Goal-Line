@@ -51,7 +51,7 @@ export default function AboutPage() {
           </Card>
 
           <h1 className="mt-8 text-4xl font-black tracking-tight text-gold-gradient">
-            Ashraful Alma
+            Ashraful Alam
           </h1>
 
           <p className="mt-2 text-lg font-semibold text-foreground">
